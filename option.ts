@@ -1,11 +1,15 @@
-type FnOnce<R> = () => R;
+/**
+ * DO NOT USE THIS SYMBOL OUTSIDE OF THIS MODULE!
+ */
+export const OPTION_IDENTIFIER = Symbol("[[OPTION IDENTIFIER]]");
 
 export interface Option<T> {
+  [identifier: typeof OPTION_IDENTIFIER | symbol]: "option";
   isSome(): boolean;
   isNone(): boolean;
   unwrap(): T | never;
   unwrapOr<D>(val: D): D | T;
-  unwrapOrElse<R>(fnOnce: FnOnce<R>): T | R;
+  unwrapOrElse<R>(fnOnce: () => R): T | R;
 }
 
 export function Some<T>(value: T): Option<T> {
