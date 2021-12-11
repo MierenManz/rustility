@@ -1,6 +1,6 @@
 import { match } from "./match.ts";
 import { Err, Ok } from "./result.ts";
-import { assertEquals } from "https://deno.land/std@0.100.0/testing/asserts.ts";
+import { assertEquals } from "https://deno.land/std@0.115.1/testing/asserts.ts";
 
 Deno.test({
   name: "match result",
