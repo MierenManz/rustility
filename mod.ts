@@ -1,5 +1,5 @@
-export { Ok, Err } from "./result.ts";
-export { Some, None } from "./option.ts";
+export { Err, Ok } from "./result.ts";
+export { None, Some } from "./option.ts";
 export * from "./match.ts";
 
 export type { Result } from "./result.ts";

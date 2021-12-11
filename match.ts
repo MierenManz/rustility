@@ -59,8 +59,7 @@ export function match<T, Ok, Err, Res, Value extends string | number>(
 
   if (func) return func(value);
 
-  throw new Error('No matching pattern found. Use "_" as a rest pattern')
-  
+  throw new Error('No matching pattern found. Use "_" as a rest pattern');
 }
 
 const matchResult = <Ok, Err, Res>(
