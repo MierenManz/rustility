@@ -1,41 +1,41 @@
-import { Result } from "./result.ts";
+import type { Result } from "./result.ts";
 
-interface MatchResult<Ok, Err, R> {
-  ok: (value: Ok) => R;
-  err: (value: Err) => R;
+interface MatchResult<Ok, Err, Res> {
+  Ok: (value: Ok) => Res;
+  Err: (value: Err) => Res;
 }
 
-interface MatchPattern<V, R> {
-  [key: string]: (val: V) => R;
-  [key: number]: (val: V) => R;
-  _: (val: V) => R;
+interface MatchPattern<Value, Res> {
+  [key: string]: (value: Value) => Res;
+  [key: number]: (value: Value) => Res;
+  _: (value: Value) => Res;
 }
 
-export function match<V extends string | number, R>(
-  value: V,
-  matchPattern: Partial<MatchPattern<V, R>>,
-): R;
+export function match<Value extends string | number, Res>(
+  value: Value,
+  matchPattern: Partial<MatchPattern<Value, Res>>,
+): Res;
 
-export function match<Ok, Err, R>(
+export function match<Ok, Err, Res>(
   res: Result<Ok, Err>,
-  match: MatchResult<Ok, Err, R>,
-): R;
+  match: MatchResult<Ok, Err, Res>,
+): Res;
 
-export function match<Ok, Err, R, V extends string | number>(
-  value: Result<Ok, Err> | V,
-  matchPattern: MatchResult<Ok, Err, R> | Partial<MatchPattern<V, R>>,
-): R {
-  if (value instanceof Result) {
+export function match<Ok, Err, Res, Value extends string | number>(
+  value: Result<Ok, Err> | Value,
+  matchPattern: MatchResult<Ok, Err, Res> | Partial<MatchPattern<Value, Res>>,
+): Res {
+  if (typeof value === "object") {
     if (value.isOk()) {
-      return (matchPattern as MatchResult<Ok, Err, R>).ok(value.unwrap());
+      return (matchPattern as MatchResult<Ok, Err, Res>).Ok(value.unwrap());
     }
-    return (matchPattern as MatchResult<Ok, Err, R>).err(value.unwrapErr());
+    return (matchPattern as MatchResult<Ok, Err, Res>).Err(value.unwrapErr());
   }
 
   // deno-fmt-ignore
   const func =
-      (matchPattern as MatchPattern<V, R>)[value] ??
-      (matchPattern as MatchPattern<V, R>)["_"];
+      (matchPattern as MatchPattern<Value, Res>)[value] ??
+      (matchPattern as MatchPattern<Value, Res>)["_"];
 
   if (func) return func(value);
 

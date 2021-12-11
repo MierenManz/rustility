@@ -6,14 +6,14 @@ Deno.test({
   name: "match result",
   fn: function () {
     const okayValue = match(Ok("ok"), {
-      ok: (val) => val,
-      err: () => "WRONG",
+      Ok: (val) => val,
+      Err: () => "WRONG",
     });
 
     assertEquals(okayValue, "ok");
     const errValue = match(Err("err"), {
-      ok: () => "WRONG",
-      err: (val) => val,
+      Ok: () => "WRONG",
+      Err: (val) => val,
     });
 
     assertEquals(errValue, "err");
