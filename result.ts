@@ -11,26 +11,23 @@ export interface Result<Ok, Err> {
   isOk(): boolean;
 }
 
-const UNWRAP_ERROR_ERROR = new Error("Tried to unwrap error when value was Ok");
-const UNWRAP_ERROR = new Error("Tried to unwrap value when value was Error");
-
-export function Ok<Ok, Err>(val: Ok): Result<Ok, Err> {
+export function Ok<T>(val: T): Result<T, never> {
   return {
     [RESULT_IDENTIFIER]: "result" as const,
     unwrap: () => val,
     unwrapErr: () => {
-      throw UNWRAP_ERROR_ERROR;
+      throw new Error("Tried to unwrap error when value was Ok");;
     },
     isErr: () => false,
     isOk: () => true,
   };
 }
 
-export function Err<Ok, Err>(val: Err): Result<Ok, Err> {
+export function Err<T>(val: T): Result<never, T> {
   return {
     [RESULT_IDENTIFIER]: "result" as const,
     unwrap: () => {
-      throw UNWRAP_ERROR;
+      throw new Error("Tried to unwrap value when value was Error");;
     },
     unwrapErr: () => val,
     isErr: () => true,
