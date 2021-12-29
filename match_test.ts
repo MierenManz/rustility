@@ -1,6 +1,24 @@
 import { match } from "./match.ts";
 import { Err, Ok } from "./result.ts";
+import { Some, None } from "./option.ts";
 import { assertEquals } from "https://deno.land/std@0.115.1/testing/asserts.ts";
+
+Deno.test({
+  name: "match option",
+  fn: function () {
+    const someValue = match(Some("str"), {
+      Some: (v) => v,
+      None: () => undefined,
+    });
+    assertEquals(someValue, "str");
+
+    const noneValue = match(None, {
+      Some: (_) => true,
+      None: () => false,
+    });
+    assertEquals(noneValue, false);
+  }
+})
 
 Deno.test({
   name: "match result",
@@ -9,8 +27,8 @@ Deno.test({
       Ok: (val) => val,
       Err: () => "WRONG",
     });
-
     assertEquals(okayValue, "ok");
+
     const errValue = match(Err("err"), {
       Ok: () => "WRONG",
       Err: (val) => val,
