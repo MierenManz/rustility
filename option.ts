@@ -14,6 +14,7 @@ export interface Option<T> {
 
 export function Some<T>(value: T): Option<T> {
   return {
+    [OPTION_IDENTIFIER]: "option" as const,
     isNone: () => false,
     isSome: () => true,
     unwrap: () => value,
@@ -23,6 +24,7 @@ export function Some<T>(value: T): Option<T> {
 }
 
 export const None: Option<never> = {
+  [OPTION_IDENTIFIER]: "option" as const,
   isNone: () => true,
   isSome: () => false,
   unwrap: () => {

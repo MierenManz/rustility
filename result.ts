@@ -16,6 +16,7 @@ const UNWRAP_ERROR = new Error("Tried to unwrap value when value was Error");
 
 export function Ok<Ok, Err>(val: Ok): Result<Ok, Err> {
   return {
+    [RESULT_IDENTIFIER]: "result" as const,
     unwrap: () => val,
     unwrapErr: () => {
       throw UNWRAP_ERROR_ERROR;
@@ -27,6 +28,7 @@ export function Ok<Ok, Err>(val: Ok): Result<Ok, Err> {
 
 export function Err<Ok, Err>(val: Err): Result<Ok, Err> {
   return {
+    [RESULT_IDENTIFIER]: "result" as const,
     unwrap: () => {
       throw UNWRAP_ERROR;
     },
