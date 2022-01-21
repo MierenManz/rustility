@@ -62,12 +62,16 @@ export function match<T, Ok, Err, Res, Value extends string | number>(
   throw new Error('No matching pattern found. Use "_" as a rest pattern');
 }
 
-const matchResult = <Ok, Err, Res>(
+function matchResult<Ok, Err, Res>(
   res: Result<Ok, Err>,
   pattern: MatchResultPattern<Ok, Err, Res>,
-): Res => res.isOk() ? pattern.Ok(res.unwrap()) : pattern.Err(res.unwrapErr());
+): Res {
+  return res.isOk() ? pattern.Ok(res.unwrap()) : pattern.Err(res.unwrapErr());
+}
 
-const matchOption = <T, Res>(
+function matchOption<T, Res>(
   option: Option<T>,
   pattern: MatchOptionPattern<T, Res>,
-): Res => option.isSome() ? pattern.Some(option.unwrap()) : pattern.None();
+): Res {
+  return option.isSome() ? pattern.Some(option.unwrap()) : pattern.None();
+}
