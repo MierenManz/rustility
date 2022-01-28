@@ -1,6 +1,6 @@
 import { match } from "./match.ts";
 import { Err, Ok } from "./result.ts";
-import { Some, None } from "./option.ts";
+import { None, Some } from "./option.ts";
 import { assertEquals } from "https://deno.land/std@0.115.1/testing/asserts.ts";
 
 Deno.test({
@@ -17,8 +17,8 @@ Deno.test({
       None: () => false,
     });
     assertEquals(noneValue, false);
-  }
-})
+  },
+});
 
 Deno.test({
   name: "match result",

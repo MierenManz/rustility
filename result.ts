@@ -16,7 +16,7 @@ export function Ok<T>(val: T): Result<T, never> {
     [RESULT_IDENTIFIER]: "result" as const,
     unwrap: () => val,
     unwrapErr: () => {
-      throw new Error("Tried to unwrap error when value was Ok");;
+      throw new Error("Tried to unwrap error when value was Ok");
     },
     isErr: () => false,
     isOk: () => true,
@@ -27,7 +27,7 @@ export function Err<T>(val: T): Result<never, T> {
   return {
     [RESULT_IDENTIFIER]: "result" as const,
     unwrap: () => {
-      throw new Error("Tried to unwrap value when value was Error");;
+      throw new Error("Tried to unwrap value when value was Error");
     },
     unwrapErr: () => val,
     isErr: () => true,
