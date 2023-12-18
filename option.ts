@@ -1,10 +1,7 @@
-/**
- * DO NOT USE THIS SYMBOL OUTSIDE OF THIS MODULE!
- */
-export const OPTION_IDENTIFIER = Symbol("[[OPTION IDENTIFIER]]");
+import { IDENTIFIER } from "./_symbol.ts";
 
 export interface Option<T> {
-  [identifier: typeof OPTION_IDENTIFIER | symbol]: "option";
+  [IDENTIFIER]: "option";
   isSome(): boolean;
   isNone(): boolean;
   unwrap(): T | never;
@@ -14,7 +11,7 @@ export interface Option<T> {
 
 export function Some<T>(value: T): Option<T> {
   return {
-    [OPTION_IDENTIFIER]: "option" as const,
+    [IDENTIFIER]: "option",
     isNone: () => false,
     isSome: () => true,
     unwrap: () => value,
@@ -24,7 +21,7 @@ export function Some<T>(value: T): Option<T> {
 }
 
 export const None: Option<never> = {
-  [OPTION_IDENTIFIER]: "option" as const,
+  [IDENTIFIER]: "option",
   isNone: () => true,
   isSome: () => false,
   unwrap: () => {

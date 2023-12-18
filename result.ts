@@ -1,10 +1,7 @@
-/**
- * DO NOT USE THIS SYMBOL OUTSIDE OF THIS MODULE!
- */
-export const RESULT_IDENTIFIER = Symbol("[[RESULT IDENTIFIER]]");
+import { IDENTIFIER } from "./_symbol.ts";
 
 export interface Result<Ok, Err> {
-  [identifier: typeof RESULT_IDENTIFIER | symbol]: "result";
+  [IDENTIFIER]: "result";
   unwrap(): Ok;
   unwrapErr(): Err;
   isErr(): boolean;
@@ -13,7 +10,7 @@ export interface Result<Ok, Err> {
 
 export function Ok<T>(val: T): Result<T, never> {
   return {
-    [RESULT_IDENTIFIER]: "result" as const,
+    [IDENTIFIER]: "result",
     unwrap: () => val,
     unwrapErr: () => {
       throw new Error("Tried to unwrap error when value was Ok");
@@ -25,7 +22,7 @@ export function Ok<T>(val: T): Result<T, never> {
 
 export function Err<T>(val: T): Result<never, T> {
   return {
-    [RESULT_IDENTIFIER]: "result" as const,
+    [IDENTIFIER]: "result",
     unwrap: () => {
       throw new Error("Tried to unwrap value when value was Error");
     },

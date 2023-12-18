@@ -1,6 +1,6 @@
 import type { Result } from "./result.ts";
 import type { Option } from "./option.ts";
-import { OPTION_IDENTIFIER } from "./option.ts";
+import { IDENTIFIER } from "./_symbol.ts";
 
 interface MatchResultPattern<Ok, Err, Res> {
   Ok(value: Ok): Res;
@@ -42,13 +42,13 @@ export function match<T, Ok, Err, Res, Value extends string | number>(
 ): Res {
   if (typeof value === "object") {
     // Either `Result<Ok, Err>` or `Option<T>`
-    return value[OPTION_IDENTIFIER] === "option"
+    return value[IDENTIFIER] === "option"
       ? matchOption(
-        value as Option<T>,
+        value,
         pattern as MatchOptionPattern<T, Res>,
       )
       : matchResult(
-        value as Result<Ok, Err>,
+        value,
         pattern as MatchResultPattern<Ok, Err, Res>,
       );
   }
