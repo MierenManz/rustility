@@ -2,7 +2,7 @@ import { None, Some } from "./option.ts";
 import {
   assertEquals,
   assertThrows,
-} from "https://deno.land/std@0.115.1/testing/asserts.ts";
+} from "https://deno.land/std@0.128.0/testing/asserts.ts";
 
 Deno.test({
   name: "Some Test",
