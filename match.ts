@@ -1,6 +1,6 @@
 import type { Result } from "./result.ts";
 import type { Option } from "./option.ts";
-import { IDENTIFIER } from "./_symbol.ts";
+import { IDENTIFIER } from "./_common.ts";
 
 interface MatchResultPattern<Ok, Err, Res> {
   Ok(value: Ok): Res;
@@ -66,12 +66,12 @@ function matchResult<Ok, Err, Res>(
   res: Result<Ok, Err>,
   pattern: MatchResultPattern<Ok, Err, Res>,
 ): Res {
-  return res.isOk() ? pattern.Ok(res.unwrap()) : pattern.Err(res.unwrapErr());
+  return res.isOk ? pattern.Ok(res.unwrap()) : pattern.Err(res.unwrapErr());
 }
 
 function matchOption<T, Res>(
   option: Option<T>,
   pattern: MatchOptionPattern<T, Res>,
 ): Res {
-  return option.isSome() ? pattern.Some(option.unwrap()) : pattern.None();
+  return option.isSome ? pattern.Some(option.unwrap()) : pattern.None();
 }

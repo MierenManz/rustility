@@ -12,8 +12,8 @@ Deno.test({
     assertEquals(res.unwrap(), "Some string");
     assertEquals(res.unwrapOr("not some"), "Some string");
     assertEquals(res.unwrapOrElse(() => "not some"), "Some string");
-    assertEquals(res.isSome(), true);
-    assertEquals(res.isNone(), false);
+    assertEquals(res.isSome, true);
+    assertEquals(res.isNone, false);
   },
 });
 
@@ -25,7 +25,7 @@ Deno.test({
     assertThrows(res.unwrap);
     assertEquals(res.unwrapOr("not none"), "not none");
     assertEquals(res.unwrapOrElse(() => "not none"), "not none");
-    assertEquals(res.isSome(), false);
-    assertEquals(res.isNone(), true);
+    assertEquals(res.isSome, false);
+    assertEquals(res.isNone, true);
   },
 });

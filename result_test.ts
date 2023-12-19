@@ -11,8 +11,8 @@ Deno.test({
 
     assertEquals(res.unwrap(), "unwrap string");
     assertThrows(res.unwrapErr);
-    assertEquals(res.isOk(), true);
-    assertEquals(res.isErr(), false);
+    assertEquals(res.isOk, true);
+    assertEquals(res.isErr, false);
   },
 });
 
@@ -23,7 +23,7 @@ Deno.test({
 
     assertEquals(res.unwrapErr(), "unwrap string");
     assertThrows(res.unwrap);
-    assertEquals(res.isErr(), true);
-    assertEquals(res.isOk(), false);
+    assertEquals(res.isErr, true);
+    assertEquals(res.isOk, false);
   },
 });

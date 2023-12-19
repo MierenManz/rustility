@@ -1,33 +1,43 @@
-import { IDENTIFIER } from "./_symbol.ts";
+import { type FnOnce, IDENTIFIER } from "./_common.ts";
 
 export interface Result<Ok, Err> {
   [IDENTIFIER]: "result";
   unwrap(): Ok;
   unwrapErr(): Err;
-  isErr(): boolean;
-  isOk(): boolean;
+  unwrapOr<T>(val: T): Ok | T;
+  unwrapOrElse<T>(fnOnce: FnOnce<T>): Ok | T;
+  readonly isErr: boolean;
+  readonly isOk: boolean;
 }
 
-export function Ok<T>(val: T): Result<T, never> {
+export function Ok<Ok>(val: Ok): Result<Ok, unknown> {
   return {
     [IDENTIFIER]: "result",
     unwrap: () => val,
-    unwrapErr: () => {
-      throw new Error("Tried to unwrap error when value was Ok");
+    unwrapErr() {
+      throw new Error("Tried to unwrap error when variant is Ok");
     },
-    isErr: () => false,
-    isOk: () => true,
+    unwrapOr(_) {
+      return this.unwrap();
+    },
+    unwrapOrElse(_) {
+      return this.unwrap();
+    },
+    isErr: false,
+    isOk: true,
   };
 }
 
-export function Err<T>(val: T): Result<never, T> {
+export function Err<Err>(val: Err): Result<unknown, Err> {
   return {
     [IDENTIFIER]: "result",
-    unwrap: () => {
-      throw new Error("Tried to unwrap value when value was Error");
+    unwrap() {
+      throw new Error("Tried to unwrap value when variant is Err");
     },
     unwrapErr: () => val,
-    isErr: () => true,
-    isOk: () => false,
+    unwrapOr: <T>(v: T) => v,
+    unwrapOrElse: <T>(fnOnce: FnOnce<T>) => fnOnce(),
+    isErr: true,
+    isOk: false,
   };
 }
